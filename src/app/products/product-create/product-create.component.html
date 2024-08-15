@@ -1,0 +1,42 @@
+<h3>Ürün Oluştur</h3>
+<form #form="ngForm" (ngSubmit)="saveProduct(form)">
+    <div class="alert alert-danger" *ngIf="error">
+        {{ error }}
+    </div>
+    <div class="mb-3">
+        <label for="name" class="form-label"><h6>İsim</h6></label>
+        <input required minlength="1" [(ngModel)]="model.name" #name="ngModel" type="text" name="name" id="name" class="form-control">
+        <div class="text-danger mt-1" *ngIf="name.invalid && name.touched">
+            Ürün ismi en az 1 harfli olmalı!
+        </div>
+    </div>
+    <div class="mb-3">
+        <label for="price" class="form-label"><h6>Fiyat</h6></label>
+        <input [(ngModel)]="model.price" type="number" required min="0" max="1000000" name="price" #price="ngModel" id="price" class="form-control">
+        <div class="text-danger mt-1" *ngIf="price.invalid && price.touched">
+            Ürün fiyatı negatif bir sayı olamaz!
+        </div>
+    </div>
+    <div class="mb-3">
+        <label for="imageUrl" class="form-label"><h6>Fotoğraf Url</h6></label>
+        <input [(ngModel)]="model.imageUrl" type="text" name="imageUrl" id="imageUrl" class="form-control">
+    </div>
+    <div class="mb-3">
+        <label for="description" class="form-label"><h6>Açıklama</h6></label>
+        <textarea [(ngModel)]="model.description" name="description" id="description" class="form-control"></textarea>
+    </div>
+    <div class="form-check mb-3">
+        <input [(ngModel)]="model.isActive" class="form-check-input" type="checkbox" name="isActive" id="isActive">
+        <label class="form-check-label" for="isActive">
+          <h6>Satışta mı? (evet ise kutucuğu işaretleyiniz)</h6>
+        </label>
+    </div>
+    <div class="mb-3">
+        <label for="categoryId" class="form-label"><h6>Kategori</h6></label>
+        <select [(ngModel)]="model.categoryId" name="categoryId" id="categoryId" class="form-control">
+            <option value="0">Kategori</option>
+            <option *ngFor="let category of categories" value="{{ category.id }}">{{ category.name }}</option>
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary" [disabled]="form.invalid">Ürünü Kaydet</button>
+</form>
